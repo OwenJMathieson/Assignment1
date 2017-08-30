@@ -17,6 +17,7 @@ def main():
 
 
         if choice == "L":
+            
             songreader = open('SongList.csv')
             songs = list(csv.reader(songreader, delimiter=','))
             for i in range(0, len(songs), 1):
