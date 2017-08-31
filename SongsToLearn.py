@@ -1,6 +1,7 @@
 import csv
 number_of_songs = 6
-
+songreader = open('SongList.csv')
+songs = list(csv.reader(songreader, delimiter=','))
 def main():
     choice = ""
     while choice != "Q":
@@ -17,9 +18,8 @@ def main():
 
 
         if choice == "L":
-            
-            songreader = open('SongList.csv')
-            songs = list(csv.reader(songreader, delimiter=','))
+
+
             for i in range(0, len(songs), 1):
                 if songs[i][3] == 'Y':
                     songs[i][3] = '*'
@@ -43,17 +43,19 @@ def main():
                 print("Input cannot be blank.")
                 artist = str(input("Artist:"))
 
-            year = input("Year:")
-            while year != int or year <= 0 or year == "":
+            year = int(input("Year:"))
+            while year <= 0:
                 print("Invalid Input; enter a valid number")
                 year = input("Year:")
 
-            new_song = "{}, {}, {}, N".format(title, artist, year)
-            opencsv = open('SongList.csv')
-            reader = csv.reader(opencsv)
-            writer = csv.writer(opencsv, delimiter=",", quotechar=new_song, quoting=csv.QUOTE_ALL)
-            for row in reader:
-                writer.writerow(row)
+            new_song = [title, artist, year,'N']
+            songreader = open('SongList.csv', 'w', newline='')
+            songs.append(new_song)
+            writer = csv.writer(songreader, delimiter=",")
+            for lines in songs:
+                writer.writerow(lines)
+            songreader.close()
+
 
 
 
