@@ -1,7 +1,7 @@
 import csv
+import copy
 number_of_songs = 6
-songreader = open('SongList.csv')
-songs = list(csv.reader(songreader, delimiter=','))
+
 def main():
     choice = ""
     while choice != "Q":
@@ -15,17 +15,18 @@ def main():
 
 
         choice = input(">>> ").upper()
+        songreader = open('SongList.csv')
+        songs = list(csv.reader(songreader, delimiter=','))
 
 
         if choice == "L":
-
-
-            for i in range(0, len(songs), 1):
-                if songs[i][3] == 'Y':
-                    songs[i][3] = '*'
+            songs_temp= copy.copy(songs)
+            for i in range(0, len(songs_temp), 1):
+                if songs_temp[i][3] == 'Y':
+                    songs_temp[i][3] = '*'
                 else:
-                    songs[i][3] = ''
-                print(i, '. {:1} {:30} {:1} {:30} {} {} {}'.format(songs[i][3], songs[i][0], '- ', songs[i][1],'(', songs[i][2], ')'))
+                    songs_temp[i][3] = ''
+                print(i, '. {:1} {:30} {:1} {:30} {} {} {}'.format(songs_temp[i][3], songs_temp[i][0], '- ', songs_temp[i][1],'(', songs_temp[i][2], ')'))
 
 
 
@@ -67,12 +68,23 @@ def main():
 
 
         elif choice == "C":
-            print("Hello ")
+            print("Enter the Number of a song to mark as learned:")
+            Song_learning = int(input(">>> "))
+            songreader = open('SongList.csv', 'w', newline='')
+            songs[Song_learning][3] = 'Y'
+            writer = csv.writer(songreader, delimiter=",")
+            for lines in songs:
+                writer.writerow(lines)
+            songreader.close()
 
+
+        elif choice =="Q":
+            choice = "Q"
 
         else:
             print("Invalid Option")
             choice = input(">>> ").upper()
+
 
 
 main()
